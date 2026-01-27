@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Pay Bill{% endblock %}
+
+{% block content %}
+<div
+    style="max-width: 500px; margin: 2rem auto; padding: 0; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; background: white;">
+    <div style="background: #2563eb; color: white; padding: 1.5rem; text-align: center;">
+        <h3 style="margin:0;">Secure Payment</h3>
+        <p style="margin:0; opacity: 0.9;">Total Payable: <strong>Rs {{ "%.2f"|format(bill.total_amount +
+                bill.penalty_amount if bill.penalty_amount and bill.due_date < now else bill.total_amount) }}</strong>
+        </p>
+    </div>
+
+    <form method="POST" style="padding: 2rem;">
+        <div class="form-group">
+            <label>Cardholder Name</label>
+            <input type="text" name="card_name" class="form-control" required placeholder="Name on Card">
+        </div>
+
+        <div class="form-group">
+            <label>Card Number</label>
+            <input type="text" name="card_number" class="form-control" required placeholder="1234 5678 1234 5678">
+        </div>
+
+        <div style="display: flex; gap: 1rem;">
+            <div class="form-group" style="flex: 1;">
+                <label>Expiry Date</label>
+                <input type="text" name="expiry" class="form-control" required placeholder="MM/YY">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label>CVV</label>
+                <input type="password" name="cvv" class="form-control" required placeholder="123">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1rem;">Confirm Payment</button>
+        <a href="{{ url_for('consumer.dashboard') }}"
+            style="display: block; text-align: center; margin-top: 1rem; color: #666; text-decoration: none;">Cancel</a>
+    </form>
+</div>
+{% endblock %}
