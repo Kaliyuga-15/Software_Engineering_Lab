@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Employee Dashboard{% endblock %}
+
+{% block content %}
+<div style="max-width: 600px; margin: 2rem auto;">
+    <h1>Employee Dashboard</h1>
+
+    <div style="background: #f9fafb; padding: 2rem; border-radius: 8px; border: 1px solid #eee;">
+        <h3>Generate Bill</h3>
+        <form method="POST" action="{{ url_for('employee.generate_bill') }}">
+            <div class="form-group">
+                <label>Consumer Meter Number</label>
+                <input type="text" name="meter_number" class="form-control" required placeholder="Enter Meter #">
+            </div>
+            <div class="form-group">
+                <label>Current Reading</label>
+                <input type="number" name="current_reading" class="form-control" step="0.01" required
+                    placeholder="e.g. 1500">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Generate Bill</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
