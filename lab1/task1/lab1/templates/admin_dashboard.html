@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div style="margin-top: 2rem;">
+    <h1>Admin Panel</h1>
+
+    <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+        <a href="{{ url_for('admin.register_employee') }}" class="btn btn-primary">Register New Employee</a>
+        <a href="{{ url_for('admin.register_consumer') }}" class="btn btn-primary">Register New Consumer</a>
+    </div>
+
+    <h3>Employees</h3>
+    <div class="table-container" style="margin-bottom: 2rem;">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Emp ID</th>
+                    <th>Username</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp.id }}</td>
+                    <td>{{ emp.employee_id }}</td>
+                    <td>{{ emp.username }}</td>
+                    <td>{{ emp.phone }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No employees found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Consumers</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Meter</th>
+                    <th>Username</th>
+                    <th>Type</th>
+                    <th>Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for con in consumers %}
+                <tr>
+                    <td>{{ con.meter_number }}</td>
+                    <td>{{ con.username }}</td>
+                    <td>{{ con.connection_type }}</td>
+                    <td>{{ con.phone }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No consumers found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <h3>Recent Bills</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Units</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bill in bills %}
+                <tr>
+                    <td>{{ bill.bill_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ bill.user.username }}</td>
+                    <td>{{ bill.units_consumed }}</td>
+                    <td>{{ "%.2f"|format(bill.total_amount) }}</td>
+                    <td>{{ bill.status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">No bills found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
